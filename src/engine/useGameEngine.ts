@@ -40,6 +40,20 @@ const createLogEntry = (partial: Omit<ActionLogEntry, 'id' | 'timestamp'>): Acti
   ...partial,
 });
 
+type GameAction =
+  | { type: 'NAVIGATE_SCENE'; sceneId: string }
+  | { type: 'COMPLETE_PUZZLE'; puzzleId: string; sceneId: string }
+  | { type: 'FAIL_PUZZLE'; puzzleId: string; message?: string }
+  | { type: 'CHOOSE_ENDING'; endingId: keyof typeof ENDINGS }
+  | { type: 'ADD_LOG'; entry: ActionLogEntry }
+  | { type: 'UNLOCK_SCENES'; sceneIds: string[] };
+
+const mergeUnique = (base: string[], additions: string[]) => {
+  const set = new Set(base);
+  additions.forEach(item => set.add(item));
+  return Array.from(set);
+};
+
 const initialState: GameState = {
   sceneId: STARTING_SCENE,
   inventory: [],
@@ -57,20 +71,6 @@ const initialState: GameState = {
     }),
   ],
   puzzleProgress: {},
-};
-
-type GameAction =
-  | { type: 'NAVIGATE_SCENE'; sceneId: string }
-  | { type: 'COMPLETE_PUZZLE'; puzzleId: string; sceneId: string }
-  | { type: 'FAIL_PUZZLE'; puzzleId: string; message?: string }
-  | { type: 'CHOOSE_ENDING'; endingId: keyof typeof ENDINGS }
-  | { type: 'ADD_LOG'; entry: ActionLogEntry }
-  | { type: 'UNLOCK_SCENES'; sceneIds: string[] };
-
-const mergeUnique = (base: string[], additions: string[]) => {
-  const set = new Set(base);
-  additions.forEach(item => set.add(item));
-  return Array.from(set);
 };
 
 const reducer = (state: GameState, action: GameAction): GameState => {
