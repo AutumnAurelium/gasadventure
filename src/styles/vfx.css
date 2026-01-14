@@ -1,0 +1,171 @@
+/* Cyberpunk VFX helpers: scanlines, glows, flicker, motion. */
+:root {
+  --vfx-scanline-opacity: 0.12;
+  --vfx-glow-primary: rgba(88, 255, 214, 0.35);
+  --vfx-glow-secondary: rgba(255, 109, 224, 0.22);
+  --vfx-glow-tertiary: rgba(92, 154, 255, 0.2);
+  --vfx-scanline-size: 2px;
+  --vfx-flicker-min: 0.78;
+  --vfx-flicker-max: 1;
+  --vfx-halo-size: 28px;
+  --vfx-drift-duration: 18s;
+}
+
+.vfx-stage {
+  position: relative;
+  isolation: isolate;
+  background-image:
+    radial-gradient(120% 140% at 15% 0%, rgba(89, 254, 214, 0.12), transparent 60%),
+    radial-gradient(90% 120% at 85% 10%, rgba(255, 109, 224, 0.1), transparent 55%),
+    linear-gradient(120deg, rgba(9, 16, 24, 0.92) 0%, rgba(12, 20, 32, 0.94) 55%, rgba(10, 14, 26, 0.92) 100%);
+  background-size: 160% 160%, 160% 160%, 100% 100%;
+  background-position: 0% 0%, 100% 0%, center;
+  animation: vfx-drift var(--vfx-drift-duration) ease-in-out infinite alternate;
+}
+
+.vfx-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, var(--vfx-scanline-opacity)) 0,
+    rgba(255, 255, 255, 0) var(--vfx-scanline-size),
+    rgba(0, 0, 0, 0.08) calc(var(--vfx-scanline-size) * 2)
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0.8;
+  transform: translateZ(0);
+  animation: vfx-scanlines 10s linear infinite;
+}
+
+.vfx-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 40% 18%, var(--vfx-glow-primary), transparent 55%),
+    radial-gradient(circle at 72% 28%, var(--vfx-glow-secondary), transparent 60%),
+    radial-gradient(circle at 20% 75%, var(--vfx-glow-tertiary), transparent 65%);
+  mix-blend-mode: screen;
+  opacity: 0.65;
+  filter: blur(8px);
+}
+
+.vfx-card {
+  position: relative;
+  border: 1px solid rgba(132, 214, 255, 0.18);
+  box-shadow:
+    0 0 0 1px rgba(120, 255, 229, 0.06),
+    0 10px 24px rgba(5, 10, 18, 0.35);
+  overflow: hidden;
+}
+
+.vfx-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow:
+    0 0 var(--vfx-halo-size) rgba(88, 255, 214, 0.14),
+    0 0 calc(var(--vfx-halo-size) * 0.65) rgba(255, 109, 224, 0.1);
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+.vfx-flicker {
+  animation: vfx-flicker 3.8s steps(14, end) infinite;
+  text-shadow:
+    0 0 8px rgba(120, 255, 229, 0.5),
+    0 0 18px rgba(255, 109, 224, 0.25);
+}
+
+.vfx-edge-glow {
+  box-shadow:
+    inset 0 0 12px rgba(88, 255, 214, 0.2),
+    inset 0 0 28px rgba(92, 154, 255, 0.12);
+}
+
+.vfx-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.vfx-sheen::after {
+  content: '';
+  position: absolute;
+  top: -120%;
+  left: -40%;
+  width: 60%;
+  height: 240%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  transform: translateX(-20%);
+  animation: vfx-sheen 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes vfx-scanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 120px;
+  }
+}
+
+@keyframes vfx-drift {
+  0% {
+    background-position: 0% 0%, 100% 0%, center;
+  }
+  100% {
+    background-position: 25% 15%, 80% 10%, center;
+  }
+}
+
+@keyframes vfx-flicker {
+  0% {
+    opacity: var(--vfx-flicker-max);
+  }
+  45% {
+    opacity: var(--vfx-flicker-min);
+  }
+  48% {
+    opacity: calc(var(--vfx-flicker-min) + 0.08);
+  }
+  52% {
+    opacity: var(--vfx-flicker-max);
+  }
+  100% {
+    opacity: calc(var(--vfx-flicker-min) + 0.1);
+  }
+}
+
+@keyframes vfx-sheen {
+  0% {
+    transform: translateX(-30%) translateY(0%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(160%) translateY(5%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(160%) translateY(5%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vfx-stage,
+  .vfx-stage::before,
+  .vfx-flicker,
+  .vfx-sheen::after {
+    animation: none;
+  }
+}
