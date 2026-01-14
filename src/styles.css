@@ -2,15 +2,15 @@
 @import './styles/vfx.css';
 
 :root {
-  --ga-bg: #0e141f;
-  --ga-surface: #151f2d;
-  --ga-surface-alt: #1d2a3d;
-  --ga-text: #f4f2ed;
-  --ga-text-muted: #b7c2d1;
-  --ga-accent: #ffb454;
-  --ga-accent-soft: #2d3a4f;
-  --ga-border: #2a3750;
-  --ga-gradient: linear-gradient(140deg, rgba(14, 20, 31, 0.92), rgba(27, 43, 62, 0.92) 40%, rgba(39, 55, 77, 0.95) 100%);
+  --ga-bg: #05070a;
+  --ga-surface: #0b0f14;
+  --ga-surface-alt: #121922;
+  --ga-text: #e6f4ff;
+  --ga-text-muted: #8ea5b8;
+  --ga-accent: #32f5ff;
+  --ga-accent-soft: #0d141b;
+  --ga-border: #1a2a36;
+  --ga-gradient: linear-gradient(160deg, rgba(4, 6, 8, 0.98), rgba(8, 12, 16, 0.96) 45%, rgba(10, 16, 22, 0.94) 100%);
   --ga-neon-cyan: #32f5ff;
   --ga-neon-pink: #ff4fd8;
   --ga-neon-lime: #b8ff5a;
@@ -30,10 +30,11 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
   color: var(--ga-text);
   background: var(--ga-gradient);
   background-attachment: fixed;
+  background-color: var(--ga-bg);
 }
 
 body::before {
@@ -41,9 +42,10 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.08), transparent 35%),
-    radial-gradient(circle at 85% 15%, rgba(255, 180, 84, 0.12), transparent 40%),
-    radial-gradient(circle at 70% 80%, rgba(91, 209, 255, 0.12), transparent 45%);
+    radial-gradient(circle at 18% 18%, rgba(50, 245, 255, 0.18), transparent 40%),
+    radial-gradient(circle at 82% 22%, rgba(255, 79, 216, 0.18), transparent 45%),
+    radial-gradient(circle at 65% 78%, rgba(184, 255, 90, 0.14), transparent 50%),
+    repeating-linear-gradient(0deg, rgba(50, 245, 255, 0.06) 0 1px, transparent 1px 4px);
   pointer-events: none;
   z-index: 0;
 }
@@ -59,7 +61,7 @@ h2,
 h3,
 h4 {
   margin: 0 0 0.5rem;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
 }
 
 h1 {
@@ -100,6 +102,11 @@ input {
   flex-direction: column;
   gap: 1.5rem;
   animation: float-in 0.8s ease both;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(50, 245, 255, 0.18);
+  background: rgba(4, 8, 12, 0.75);
+  box-shadow: 0 0 30px rgba(50, 245, 255, 0.08), 0 30px 60px rgba(0, 0, 0, 0.55);
 }
 
 .app__header {
@@ -110,6 +117,10 @@ input {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--ga-text-muted);
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(50, 245, 255, 0.2);
+  background: rgba(7, 12, 18, 0.85);
 }
 
 .app__brand {
@@ -117,7 +128,8 @@ input {
 }
 
 .app__mood {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: inherit;
+  color: var(--ga-accent);
 }
 
 .app__layout {
@@ -136,6 +148,8 @@ input {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  border-left: 1px solid rgba(50, 245, 255, 0.15);
+  padding-left: 1.5rem;
 }
 
 .scene-header {
@@ -146,11 +160,11 @@ input {
 }
 
 .scene-header__eyebrow {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: inherit;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--ga-accent);
+  color: var(--ga-neon-cyan);
   margin-bottom: 0.5rem;
 }
 
@@ -163,7 +177,7 @@ input {
   background: var(--ga-surface-alt);
   border: 1px solid var(--ga-border);
   padding: 1rem;
-  border-radius: 1rem;
+  border-radius: 0.6rem;
   width: 260px;
   flex-shrink: 0;
 }
@@ -173,14 +187,14 @@ input {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--ga-accent);
+  color: var(--ga-neon-cyan);
   margin-bottom: 0.5rem;
 }
 
 .flavor {
   background: var(--ga-surface);
   padding: 1.25rem 1.5rem;
-  border-radius: 1.2rem;
+  border-radius: 0.8rem;
   border: 1px solid var(--ga-border);
 }
 
@@ -197,17 +211,17 @@ input {
 .requirement {
   background: var(--ga-accent-soft);
   color: var(--ga-text);
-  border-left: 3px solid var(--ga-accent);
+  border-left: 3px solid var(--ga-neon-lime);
   padding: 0.75rem 1rem;
-  border-radius: 0.8rem;
+  border-radius: 0.5rem;
 }
 
 .card {
   background: var(--ga-surface);
   border: 1px solid var(--ga-border);
-  border-radius: 1.4rem;
+  border-radius: 0.8rem;
   padding: 1.5rem;
-  box-shadow: 0 20px 40px rgba(5, 10, 20, 0.35);
+  box-shadow: 0 0 22px rgba(50, 245, 255, 0.08), 0 20px 40px rgba(0, 0, 0, 0.6);
   animation: rise 0.6s ease both;
 }
 
@@ -218,9 +232,9 @@ input {
 
 .route {
   text-align: left;
-  background: linear-gradient(135deg, rgba(18, 26, 44, 0.9), rgba(8, 12, 24, 0.95));
+  background: linear-gradient(135deg, rgba(10, 16, 24, 0.95), rgba(4, 8, 14, 0.98));
   border: 1px solid rgba(50, 245, 255, 0.2);
-  border-radius: 1rem;
+  border-radius: 0.7rem;
   padding: 0.85rem 1rem;
   color: var(--ga-text);
   display: flex;
@@ -247,9 +261,9 @@ input {
 }
 
 .route em {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: inherit;
   font-size: 0.7rem;
-  color: var(--ga-accent);
+  color: var(--ga-neon-cyan);
 }
 
 .route--locked {
@@ -259,17 +273,19 @@ input {
 .panel {
   background: var(--ga-surface);
   border: 1px solid var(--ga-border);
-  border-radius: 1.2rem;
+  border-radius: 0.7rem;
   overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(50, 245, 255, 0.04);
 }
 
 .panel__header {
   padding: 0.9rem 1rem;
-  border-bottom: 1px solid var(--ga-border);
+  border-bottom: 1px solid rgba(50, 245, 255, 0.2);
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.7rem;
   color: var(--ga-text-muted);
+  background: rgba(6, 10, 16, 0.9);
 }
 
 .panel__body {
@@ -277,7 +293,7 @@ input {
 }
 
 .panel--accent {
-  background: linear-gradient(140deg, rgba(255, 180, 84, 0.2), rgba(21, 31, 45, 0.9));
+  background: linear-gradient(140deg, rgba(50, 245, 255, 0.2), rgba(8, 14, 20, 0.95));
 }
 
 .inventory li {
@@ -305,7 +321,7 @@ input {
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--ga-accent);
+  color: var(--ga-neon-cyan);
 }
 
 .log p {
@@ -353,7 +369,7 @@ input {
 }
 
 .puzzle__status--success {
-  color: var(--ga-accent);
+  color: var(--ga-neon-lime);
 }
 
 .puzzle__status--failure {
@@ -364,7 +380,7 @@ input {
   border-radius: 999px;
   padding: 0.6rem 1.2rem;
   border: 1px solid var(--ga-control-border);
-  background: linear-gradient(135deg, rgba(12, 20, 36, 0.95), rgba(10, 14, 28, 0.98));
+  background: linear-gradient(135deg, rgba(10, 16, 24, 0.98), rgba(4, 8, 14, 0.98));
   color: var(--ga-control-text);
   cursor: pointer;
   letter-spacing: 0.04em;
@@ -380,14 +396,14 @@ input {
 }
 
 .button--primary {
-  background: linear-gradient(120deg, rgba(50, 245, 255, 0.35), rgba(255, 79, 216, 0.25), rgba(12, 20, 36, 0.95));
+  background: linear-gradient(120deg, rgba(50, 245, 255, 0.35), rgba(255, 79, 216, 0.25), rgba(6, 12, 18, 0.98));
   color: var(--ga-control-text);
   border-color: rgba(50, 245, 255, 0.6);
   box-shadow: 0 0 18px rgba(50, 245, 255, 0.4), 0 0 26px rgba(255, 79, 216, 0.35);
 }
 
 .button--ghost {
-  background: rgba(18, 26, 44, 0.65);
+  background: rgba(12, 18, 26, 0.75);
   border-color: rgba(255, 79, 216, 0.35);
   box-shadow: inset 0 0 16px rgba(255, 79, 216, 0.08), var(--ga-control-glow);
 }
@@ -410,9 +426,9 @@ input {
 
 .checkbox-group {
   padding: 0.75rem;
-  border-radius: 0.8rem;
+  border-radius: 0.6rem;
   border: 1px solid rgba(50, 245, 255, 0.2);
-  background: linear-gradient(135deg, rgba(18, 26, 44, 0.75), rgba(8, 12, 24, 0.85));
+  background: linear-gradient(135deg, rgba(10, 16, 24, 0.8), rgba(4, 8, 14, 0.9));
 }
 
 .checkbox-item {
@@ -479,7 +495,7 @@ input {
   background-image:
     linear-gradient(45deg, transparent 50%, rgba(50, 245, 255, 0.9) 50%),
     linear-gradient(135deg, rgba(50, 245, 255, 0.9) 50%, transparent 50%),
-    linear-gradient(135deg, rgba(12, 20, 36, 0.95), rgba(8, 12, 24, 0.95));
+    linear-gradient(135deg, rgba(10, 16, 24, 0.98), rgba(4, 8, 14, 0.98));
   background-position:
     calc(100% - 1.1rem) 1.05rem,
     calc(100% - 0.75rem) 1.05rem,
@@ -513,7 +529,7 @@ input {
 .puzzle__warning {
   background: rgba(255, 139, 139, 0.1);
   border: 1px solid rgba(255, 139, 139, 0.4);
-  border-radius: 0.8rem;
+  border-radius: 0.5rem;
   padding: 0.6rem 0.8rem;
   color: #ffb0b0;
 }
@@ -523,7 +539,7 @@ input {
   flex-direction: column;
   gap: 1rem;
   background: var(--ga-surface-alt);
-  border-radius: 1rem;
+  border-radius: 0.6rem;
   padding: 1rem;
 }
 
@@ -604,6 +620,11 @@ input {
 
   .scene-header__note {
     width: 100%;
+  }
+
+  .sidebar {
+    border-left: none;
+    padding-left: 0;
   }
 }
 
