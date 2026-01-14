@@ -10,10 +10,22 @@ export interface SceneData {
   requiredItems?: string[];
   unlocksItems?: string[];
   nextScenes?: string[];
+  actions?: SceneAction[];
   themeOverride?: {
     palette?: string;
     mood?: string;
   };
+}
+
+export interface SceneAction {
+  id: string;
+  label: string;
+  type: 'navigate' | 'puzzle' | 'ending' | 'inspect';
+  description?: string;
+  targetSceneId?: string;
+  requiredItems?: string[];
+  grantsItems?: string[];
+  setsFlags?: string[];
 }
 
 export interface PuzzleData {
@@ -26,6 +38,23 @@ export interface PuzzleData {
   hints?: string[];
   // Puzzle-specific config will be in separate files
   config: unknown;
+}
+
+export interface ThemeTokens {
+  id: string;
+  name: string;
+  mood: string;
+  palette: {
+    background: string;
+    surface: string;
+    surfaceAlt: string;
+    text: string;
+    textMuted: string;
+    accent: string;
+    accentSoft: string;
+    border: string;
+  };
+  gradient: string;
 }
 
 export interface ItemData {

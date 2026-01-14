@@ -19,3 +19,9 @@ export { ITEMS, SIGILS, EMPATHY_ITEMS, TOKENS, ITEM_CATEGORIES } from './items';
 
 // Ending data
 export { ENDINGS, ALL_ENDINGS, FAILURE_ENDING, determineEnding } from './endings';
+
+// Action data
+export { ACTION_LIBRARY } from './actions';
+
+// Theme data
+export { THEMES, DEFAULT_THEME } from './themes';
