@@ -1,0 +1,151 @@
+:root {
+  --vfx-scanline-opacity: 0.12;
+  --vfx-glow-cyan: rgba(50, 245, 255, 0.25);
+  --vfx-glow-pink: rgba(255, 79, 216, 0.18);
+  --vfx-glow-lime: rgba(184, 255, 90, 0.16);
+  --vfx-flicker-min: 0.78;
+  --vfx-flicker-max: 1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, var(--vfx-scanline-opacity)) 0,
+    rgba(255, 255, 255, 0) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  opacity: 0.65;
+  mix-blend-mode: soft-light;
+  animation: vfx-scanlines 12s linear infinite;
+}
+
+.app {
+  position: relative;
+  isolation: isolate;
+}
+
+.app::before {
+  content: '';
+  position: absolute;
+  inset: -10% 0 -15% 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 10%, var(--vfx-glow-cyan), transparent 55%),
+    radial-gradient(circle at 85% 18%, var(--vfx-glow-pink), transparent 60%),
+    radial-gradient(circle at 15% 85%, var(--vfx-glow-lime), transparent 60%);
+  filter: blur(18px);
+  opacity: 0.7;
+  z-index: 0;
+}
+
+.app__frame {
+  position: relative;
+  z-index: 1;
+}
+
+.app__brand {
+  text-shadow: 0 0 10px rgba(50, 245, 255, 0.35), 0 0 18px rgba(255, 79, 216, 0.25);
+  animation: vfx-flicker 4.8s steps(14, end) infinite;
+}
+
+.card,
+.panel,
+.scene-header__note,
+.flavor,
+.route {
+  position: relative;
+}
+
+.card::before,
+.panel::before,
+.scene-header__note::before,
+.flavor::before,
+.route::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    0 0 24px rgba(50, 245, 255, 0.18),
+    0 0 32px rgba(255, 79, 216, 0.12);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+}
+
+.route::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -35%;
+  width: 60%;
+  height: 220%;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0.4;
+  transform: translateX(-10%);
+  animation: vfx-sheen 10s ease-in-out infinite;
+}
+
+.vfx-flicker {
+  animation: vfx-flicker 4.8s steps(14, end) infinite;
+}
+
+@keyframes vfx-scanlines {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 160px;
+  }
+}
+
+@keyframes vfx-flicker {
+  0% {
+    opacity: var(--vfx-flicker-max);
+  }
+  45% {
+    opacity: var(--vfx-flicker-min);
+  }
+  50% {
+    opacity: calc(var(--vfx-flicker-min) + 0.1);
+  }
+  55% {
+    opacity: var(--vfx-flicker-max);
+  }
+  100% {
+    opacity: calc(var(--vfx-flicker-min) + 0.08);
+  }
+}
+
+@keyframes vfx-sheen {
+  0% {
+    transform: translateX(-25%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateX(180%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(180%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after,
+  .app__brand,
+  .route::after,
+  .vfx-flicker {
+    animation: none;
+  }
+}
