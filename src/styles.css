@@ -10,6 +10,16 @@
   --ga-accent-soft: #2d3a4f;
   --ga-border: #2a3750;
   --ga-gradient: linear-gradient(140deg, rgba(14, 20, 31, 0.92), rgba(27, 43, 62, 0.92) 40%, rgba(39, 55, 77, 0.95) 100%);
+  --ga-neon-cyan: #32f5ff;
+  --ga-neon-pink: #ff4fd8;
+  --ga-neon-lime: #b8ff5a;
+  --ga-neon-amber: #ffc36b;
+  --ga-control-bg: rgba(8, 14, 28, 0.95);
+  --ga-control-border: rgba(50, 245, 255, 0.4);
+  --ga-control-text: #e8fbff;
+  --ga-control-glow: 0 0 12px rgba(50, 245, 255, 0.25), 0 0 20px rgba(255, 79, 216, 0.2);
+  --ga-control-glow-strong: 0 0 18px rgba(50, 245, 255, 0.45), 0 0 30px rgba(255, 79, 216, 0.35);
+  --ga-focus-ring: 0 0 0 2px rgba(6, 10, 20, 0.95), 0 0 0 4px rgba(50, 245, 255, 0.65);
 }
 
 * {
@@ -207,20 +217,28 @@ input {
 
 .route {
   text-align: left;
-  background: var(--ga-surface-alt);
-  border: 1px solid var(--ga-border);
+  background: linear-gradient(135deg, rgba(18, 26, 44, 0.9), rgba(8, 12, 24, 0.95));
+  border: 1px solid rgba(50, 245, 255, 0.2);
   border-radius: 1rem;
   padding: 0.85rem 1rem;
   color: var(--ga-text);
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  transition: transform 0.2s ease, border 0.2s ease;
+  box-shadow: inset 0 0 12px rgba(50, 245, 255, 0.08);
+  transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 
 .route:hover:not(:disabled) {
   transform: translateY(-2px);
-  border-color: var(--ga-accent);
+  border-color: var(--ga-neon-cyan);
+  color: var(--ga-control-text);
+  box-shadow: var(--ga-control-glow-strong);
+}
+
+.route:focus-visible {
+  outline: none;
+  box-shadow: var(--ga-focus-ring), var(--ga-control-glow-strong);
 }
 
 .route small {
@@ -315,14 +333,6 @@ input {
   gap: 0.5rem;
 }
 
-.puzzle__field select {
-  background: var(--ga-surface-alt);
-  border: 1px solid var(--ga-border);
-  border-radius: 0.75rem;
-  padding: 0.6rem 0.75rem;
-  color: var(--ga-text);
-}
-
 .puzzle__requirement {
   font-size: 0.75rem;
   color: var(--ga-text-muted);
@@ -352,33 +362,56 @@ input {
 .button {
   border-radius: 999px;
   padding: 0.6rem 1.2rem;
-  border: 1px solid var(--ga-border);
-  background: transparent;
-  color: var(--ga-text);
+  border: 1px solid var(--ga-control-border);
+  background: linear-gradient(135deg, rgba(12, 20, 36, 0.95), rgba(10, 14, 28, 0.98));
+  color: var(--ga-control-text);
   cursor: pointer;
-  transition: transform 0.2s ease, border 0.2s ease;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 8px rgba(50, 245, 255, 0.3);
+  box-shadow: inset 0 0 12px rgba(50, 245, 255, 0.08), var(--ga-control-glow);
+  transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .button:hover:not(:disabled) {
   transform: translateY(-1px);
-  border-color: var(--ga-accent);
+  border-color: var(--ga-neon-cyan);
+  box-shadow: var(--ga-control-glow-strong);
 }
 
 .button--primary {
-  background: var(--ga-accent);
-  color: #1a1510;
-  border: none;
+  background: linear-gradient(120deg, rgba(50, 245, 255, 0.35), rgba(255, 79, 216, 0.25), rgba(12, 20, 36, 0.95));
+  color: var(--ga-control-text);
+  border-color: rgba(50, 245, 255, 0.6);
+  box-shadow: 0 0 18px rgba(50, 245, 255, 0.4), 0 0 26px rgba(255, 79, 216, 0.35);
 }
 
 .button--ghost {
-  background: var(--ga-surface-alt);
+  background: rgba(18, 26, 44, 0.65);
+  border-color: rgba(255, 79, 216, 0.35);
+  box-shadow: inset 0 0 16px rgba(255, 79, 216, 0.08), var(--ga-control-glow);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--ga-focus-ring), var(--ga-control-glow-strong);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 0 18px rgba(50, 245, 255, 0.25);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .checkbox-group {
   padding: 0.75rem;
   border-radius: 0.8rem;
-  border: 1px solid var(--ga-border);
-  background: var(--ga-surface-alt);
+  border: 1px solid rgba(50, 245, 255, 0.2);
+  background: linear-gradient(135deg, rgba(18, 26, 44, 0.75), rgba(8, 12, 24, 0.85));
 }
 
 .checkbox-item {
@@ -386,6 +419,49 @@ input {
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0;
+  cursor: pointer;
+}
+
+.checkbox-item__box {
+  appearance: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(50, 245, 255, 0.5);
+  background: rgba(7, 12, 24, 0.9);
+  display: grid;
+  place-content: center;
+  box-shadow: inset 0 0 8px rgba(50, 245, 255, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease, background 0.2s ease;
+}
+
+.checkbox-item__box::after {
+  content: '';
+  width: 0.45rem;
+  height: 0.25rem;
+  border-left: 2px solid var(--ga-control-text);
+  border-bottom: 2px solid var(--ga-control-text);
+  transform: rotate(-45deg) scale(0);
+  transition: transform 0.15s ease;
+}
+
+.checkbox-item__box:checked {
+  border-color: rgba(184, 255, 90, 0.9);
+  background: linear-gradient(135deg, rgba(184, 255, 90, 0.3), rgba(50, 245, 255, 0.18));
+  box-shadow: 0 0 12px rgba(184, 255, 90, 0.45), 0 0 18px rgba(50, 245, 255, 0.35);
+}
+
+.checkbox-item__box:checked::after {
+  transform: rotate(-45deg) scale(1);
+}
+
+.checkbox-item__box:focus-visible {
+  outline: none;
+  box-shadow: var(--ga-focus-ring), var(--ga-control-glow-strong);
+}
+
+.checkbox-item:hover .checkbox-item__box {
+  transform: translateY(-1px);
 }
 
 .checkbox-item em,
@@ -395,6 +471,42 @@ input {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--ga-text-muted);
+}
+
+.puzzle__select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(50, 245, 255, 0.9) 50%),
+    linear-gradient(135deg, rgba(50, 245, 255, 0.9) 50%, transparent 50%),
+    linear-gradient(135deg, rgba(12, 20, 36, 0.95), rgba(8, 12, 24, 0.95));
+  background-position:
+    calc(100% - 1.1rem) 1.05rem,
+    calc(100% - 0.75rem) 1.05rem,
+    0 0;
+  background-size: 0.5rem 0.5rem, 0.5rem 0.5rem, 100% 100%;
+  background-repeat: no-repeat;
+  border: 1px solid rgba(50, 245, 255, 0.4);
+  border-radius: 0.75rem;
+  padding: 0.65rem 2.2rem 0.65rem 0.85rem;
+  color: var(--ga-control-text);
+  box-shadow: inset 0 0 12px rgba(50, 245, 255, 0.1);
+  transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.puzzle__select:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(50, 245, 255, 0.8);
+  box-shadow: var(--ga-control-glow);
+}
+
+.puzzle__select:focus-visible {
+  outline: none;
+  box-shadow: var(--ga-focus-ring), var(--ga-control-glow-strong);
+}
+
+.puzzle__field.is-disabled .puzzle__select {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .puzzle__warning {

@@ -83,6 +83,7 @@ export function DropdownPuzzle({ puzzle, status, onComplete, onFail }: PuzzleCom
             <label key={tier.question} className={`puzzle__field ${available ? '' : 'is-disabled'}`}>
               <span>{tier.question}</span>
               <select
+                className="puzzle__select"
                 value={selections[String(index)]}
                 onChange={event =>
                   setSelections(prev => ({ ...prev, [String(index)]: event.target.value }))

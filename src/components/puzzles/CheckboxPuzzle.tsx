@@ -65,6 +65,7 @@ export function CheckboxPuzzle({ puzzle, status, onComplete, onFail }: PuzzleCom
               <label key={box.id} className="checkbox-item">
                 <input
                   type="checkbox"
+                  className="checkbox-item__box"
                   checked={selected.includes(box.id)}
                   onChange={() => toggle(box.id)}
                 />
